@@ -13,7 +13,7 @@
 		
 	</select>
 	
-	
+	ss
 	
 	<insert id="fileInsert" parameterType="BoardFileVO">
 		insert into boardFile values(file_seq.nextval, #{num}, #{fileName}, #{oriName}, #{board})
