@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -156,5 +157,23 @@ public class MemberController {
 		memberService.fileDelete(memberVO.getId(), session);
 		return "redirect:./memberPage";
 	}
+	
+	/*/member/memberIdCheck  POST방식
+	 * 0=중복, 1=중복X
+	 */
+	
+	@PostMapping("memberIdCheck")
+	public ModelAndView memberIdCheck(MemberVO memberVO)throws Exception{
+		int result = 1;
+		ModelAndView mv= new ModelAndView();
+		if(memberService.memberIdCheck(memberVO)!=null) {
+			result=0;
+		}
+		mv.addObject("result", result);
+		mv.setViewName("common/ajaxResult");
+		
+		return mv;
+	}
+	
 	
 }

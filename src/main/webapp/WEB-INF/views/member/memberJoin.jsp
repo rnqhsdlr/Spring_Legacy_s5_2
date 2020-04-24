@@ -75,7 +75,20 @@
 		</div>
 	</div>
 
+<script type="text/javascript">
+$("#id").on("blur", function() {
+	
+	var id = $("#id").val();
+	$.post("./memberIdCheck", {id:id}, function(result) {
+		if(result>0){
+			alert("사용 가능한 id");
+		} else {
+			alert("id 중복")
+		}
+	})
+})
 
+</script>
 
 
 

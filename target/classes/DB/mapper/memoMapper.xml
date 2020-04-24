@@ -6,22 +6,15 @@
 <mapper namespace="com.iu.s5.memo.MemoDAO">
 	
 	<select id="memoList" parameterType="Pager" resultType="MemoVO">
-		select*from
+		select * from
 		(select M.*, rownum R from
-		(select*from memo where num>0 order by num desc) M)
+		(select * from memo where num > 0 order by num desc) M)
 		where R between #{startRow} and #{lastRow}
-		
+	
 	</select>
 	
-	ss
-	
-	<insert id="fileInsert" parameterType="BoardFileVO">
-		insert into boardFile values(file_seq.nextval, #{num}, #{fileName}, #{oriName}, #{board})
+	<insert id="memoInsert" parameterType="MemoVO">
+		insert into memo values(board_seq.nextval, #{writer}, #{contents}, sysdate)
 	</insert>
-	
-	<select id="fileSelect" parameterType="BoardFileVO" resultType="BoardFileVO">
-		select * from boardFile where fileNum=#{fileNum} and board=#{board}
-	</select>
-	
 
 </mapper>  

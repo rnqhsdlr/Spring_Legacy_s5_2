@@ -5,9 +5,10 @@ import java.sql.Date;
 public class MemoVO {
 	
 	private Long num;
-	private String Writer;
+	private String writer;
 	private String contents;
 	private Date regDate;
+	
 	public Long getNum() {
 		return num;
 	}
@@ -15,10 +16,10 @@ public class MemoVO {
 		this.num = num;
 	}
 	public String getWriter() {
-		return Writer;
+		return writer;
 	}
 	public void setWriter(String writer) {
-		Writer = writer;
+		this.writer = writer;
 	}
 	public String getContents() {
 		return contents;
@@ -32,5 +33,7 @@ public class MemoVO {
 	public void setRegDate(Date regDate) {
 		this.regDate = regDate;
 	}
+	
+	
 
 }
