@@ -28,15 +28,35 @@
 		 <div class="form-group" >
 		    <label for="contents">Contents:</label>
 		    <textarea rows="5" cols="" class="form-control" id="contents" name="contents"></textarea>
-		  </div> 
+		  </div>
+		  
+		  <div class="form-group" >
+		  	<label for="files">Files:</label>
+		  	<c:forEach items="${vo.boardFileVOs}" var="fileVO">
+			  	<p>${fileVO.oriName}<i id="${fileVO.fileNum}" class="glyphicon glyphicon-remove remove fileDelete"></i></p>
+		  	
+		  	</c:forEach>
+		  	
+		  	
+		  </div>
+		   
 		  
 		  <input type="submit" id="btn" class="btn btn-default" value="Write">
 		</form>
 		
 	</div>
 	
+	
+	
+	
 	<script type="text/javascript">
 		$("#contents").summernote('code', '${vo.contents}');
+		
+		$(".fileDelete").click(function() {
+			$.post("../boardFile/fileDelete", {fileNum:$(this).attr("id")}, function(data) {
+				alert(data);
+			} );
+		});
 	</script>
 	
 </body>

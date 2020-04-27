@@ -1,5 +1,6 @@
 package com.iu.s5.member;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -26,6 +27,32 @@ public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
+	
+	@PostMapping("memberIdCheck")
+	public ModelAndView memberIdCheck(MemberVO memberVO)throws Exception{
+		ModelAndView mv = new ModelAndView();
+		memberVO = memberService.memberIdCheck(memberVO);
+		//null -> 가입 가능 1
+		//null 이 아니면 중복 0
+		int result=0;
+		if(memberVO == null) {
+			result = 1;
+		}
+		mv.addObject("result", result);
+		mv.setViewName("common/ajaxResult");
+		
+		return mv;
+	}
+	
+	@GetMapping("memberLists")
+	public ModelAndView memberLists(Pager pager)throws Exception{
+		ModelAndView mv = new ModelAndView();
+		List<MemberVO> ar = memberService.memberList(pager);
+		mv.addObject("list", ar);
+		mv.addObject("pager", pager);
+		mv.setViewName("member/memberLists");
+		return mv;
+	}
 	
 	@RequestMapping(value="memberList", method = RequestMethod.GET)
 	public ModelAndView memberList(Pager memberPager, ModelAndView mv)throws Exception{
@@ -158,22 +185,23 @@ public class MemberController {
 		return "redirect:./memberPage";
 	}
 	
-	/*/member/memberIdCheck  POST방식
-	 * 0=중복, 1=중복X
-	 */
-	
-	@PostMapping("memberIdCheck")
-	public ModelAndView memberIdCheck(MemberVO memberVO)throws Exception{
-		int result = 1;
-		ModelAndView mv= new ModelAndView();
-		if(memberService.memberIdCheck(memberVO)!=null) {
-			result=0;
-		}
+	@GetMapping("memberDeletes")
+	public ModelAndView memberDeletes(String [] ids)throws Exception{
+		//배열을 List로 변환
+		ModelAndView mv = new ModelAndView();
+		List<String> list = Arrays.asList(ids);
+		int result = memberService.memberDeletes(list);
 		mv.addObject("result", result);
 		mv.setViewName("common/ajaxResult");
-		
 		return mv;
 	}
 	
-	
 }
+
+
+
+
+
+
+
+

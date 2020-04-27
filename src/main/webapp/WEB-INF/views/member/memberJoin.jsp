@@ -79,13 +79,28 @@
 $("#id").on("blur", function() {
 	
 	var id = $("#id").val();
-	$.post("./memberIdCheck", {id:id}, function(result) {
+/* 	$.post("./memberIdCheck", {id:id}, function(result) {
 		if(result>0){
 			alert("사용 가능한 id");
 		} else {
 			alert("id 중복")
 		}
-	})
+	})  */
+	
+	$.ajax({
+		type: "post",	//method
+		url : "./memberIdCheck",	//URL주소
+		data: {
+			id : id		//parameter
+		},	
+		success : function(re) {
+			alert(re);
+		},
+		error : function() {
+			alert("error 발생");
+		}
+	});
+	
 })
 
 </script>
