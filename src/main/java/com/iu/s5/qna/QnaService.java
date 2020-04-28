@@ -24,7 +24,7 @@ public class QnaService implements BoardService {
 	private FileSaver fileSaver;
 	@Autowired
 	private BoardFileDAO boardFileDAO;
-	@Autowired
+	//@Autowired
 	private ServletContext servletContext;
 	
 	public int boardReply(BoardVO boardVO)throws Exception{
@@ -71,7 +71,7 @@ public class QnaService implements BoardService {
 	}
 
 	@Override
-	public int boardUpdate(BoardVO boardVO) throws Exception {
+	public int boardUpdate(BoardVO boardVO, MultipartFile [] files) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
 	}

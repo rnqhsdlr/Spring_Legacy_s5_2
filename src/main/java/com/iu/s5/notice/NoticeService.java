@@ -60,21 +60,40 @@ public class NoticeService implements BoardService {
 		int result = noticeDAO.boardWrite(boardVO);
 		
 		for(MultipartFile file : files) {
-			BoardFileVO boardFileVO = new BoardFileVO();
-			String fileName = fileSaver.saveByTransfer(file, path);
-			boardFileVO.setNum(boardVO.getNum());
-			boardFileVO.setFileName(fileName);
-			boardFileVO.setOriName(file.getOriginalFilename());
-			boardFileVO.setBoard(1);
-			boardFileDAO.fileInsert(boardFileVO);
+			if(file.getSize()>0) {
+				BoardFileVO boardFileVO = new BoardFileVO();
+				String fileName = fileSaver.saveByTransfer(file, path);
+				boardFileVO.setNum(boardVO.getNum());
+				boardFileVO.setFileName(fileName);
+				boardFileVO.setOriName(file.getOriginalFilename());
+				boardFileVO.setBoard(1);
+				boardFileDAO.fileInsert(boardFileVO);
+			}
 		}
 		return result;
 	}
 
 	@Override
-	public int boardUpdate(BoardVO boardVO) throws Exception {
-		// TODO Auto-generated method stub
-		return noticeDAO.boardUpdate(boardVO);
+	public int boardUpdate(BoardVO boardVO, MultipartFile [] files) throws Exception {
+		
+		//HDD file save
+		String path = servletContext.getRealPath("/resources/uploadnotice");
+		System.out.println(path);
+		int result = noticeDAO.boardUpdate(boardVO);
+		for(MultipartFile multipartFile:files) {
+			 
+			if(multipartFile.getSize()>0) {
+				BoardFileVO boardFileVO = new BoardFileVO();
+				
+				boardFileVO.setFileName(fileSaver.saveByUtils(multipartFile, path));
+				boardFileVO.setOriName(multipartFile.getOriginalFilename());
+				boardFileVO.setNum(boardVO.getNum());
+				boardFileVO.setBoard(1);
+				result = boardFileDAO.fileInsert(boardFileVO);
+			}
+		}
+		
+		return result;
 	}
 
 	@Override
