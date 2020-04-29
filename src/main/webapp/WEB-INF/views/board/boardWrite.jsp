@@ -41,28 +41,9 @@
 		  <input type="button" id="btn" class="btn btn-default" value="Write">
 		</form>
 	</div>
-<!-- <script type="text/javascript" src="../resources/js/boardForm.js"> -->
+ <script type="text/javascript" src="../resources/js/boardForm.js"></script>
 
-	<script type="text/javascript">
-	$("#contents").summernote({
-		height: 300,
-		callbacks:{
-			onImageUpload:function(file){
-				$.ajax({
-					type : "POST", 
-					url : "../boardFile/fileInsert",
-					encType : "multipart/form-data",
-					cache : false,
-					contentType : false,
-					processData : false,
-					success : function(imageName){}
-				});
-			}
-		}
-	});
-	
-	
-	</script>
+
 	
 </body>
 </html>

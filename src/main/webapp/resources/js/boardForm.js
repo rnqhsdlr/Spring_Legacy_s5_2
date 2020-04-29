@@ -17,7 +17,56 @@
 			alert("파일은 최대 5개 만 가능");
 		}
 	});
+	/////////////////////////////////////////////////
+	$("#contents").summernote({
+		height: 300,
+		callbacks:{
+			onImageUpload:function(files, editor){
+				var formData = new FormData();//<form></form>
+				formData.append('files', files[0]); //<input type="file" name="">
+				$.ajax({
+					type:"POST",
+					url:"../boardFile/fileInsert",
+					data:formData,
+					enctype:"multipart/form-data",
+					cache:false,
+					contentType:false,
+					processData:false,
+					success:function(imageName){
+						console.log(imageName);
+						imageName=imageName.trim();
+						$("#contents").summernote('editor.insertImage', imageName);
+					}
+					
+				});
+			},//onImageUpload
+			
+			onMediaDelete:function(files){
+				
+				var fileName = $(files[0]).attr("src");
+				fileName = fileName.substring(fileName.lastIndexOf("/"));
+				console.log(fileName);
+				$.ajax({
+					type: "POST",
+					url: "../boardFile/summerDelete",
+					data:{
+						fileName:fileName
+					},
+					success:function(data){
+						console.log(data);
+					}
+					
+				});
+			}//OnMediarDelete
+			
+		}//callBack
+	});
 	
+	
+	
+	
+	
+	/////////////////////////////////////////////////
 	$("#btn").click(function() {
 		//title, contents 데이터 유무 검증
 		var title = $("#title").val();
