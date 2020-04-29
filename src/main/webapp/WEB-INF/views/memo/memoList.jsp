@@ -18,16 +18,17 @@
 			</div>
 			
 			<div class="form-group">
- 				 <label for="comment">Contents:</label>
- 				 <textarea class="form-control" rows="5" id="contents"></textarea>
+  				<label for="comment">Contents:</label>
+  				<textarea class="form-control" rows="5" id="contents"></textarea>
 			</div>
 			
 			<button id="btn" class="btn btn-danger">WRITE</button>
 		</div>
+		
 		<div class="row">
 			<table id="result" class="table table-striped">
 				<tr>
-					<td>NUM</td>
+					<td>Num</td>
 					<td>Contents</td>
 					<td>Writer</td>
 					<td>Date</td>
@@ -35,44 +36,50 @@
 			</table>
 		</div>
 		<div>
-			<button id="more">MORE</button>
+			<button id="more">더보기</button>
 		</div>
+		
 	</div>
 	
 	<script type="text/javascript">
-	var count = 1;
-	function getList(curPage) {
-		$.get("getList?curPage="+curPage, function(result) {
-			$("#result").append(result);
-		});	
-	}
+		var count=1;
+		function getList(curPage) {
+			$.get("getList?curPage="+curPage, function(result) {
+				$("#result").append(result);
+			});	
+		}
+				
 	
-	getList(count);
-	
-	$("#more").on("click", function() {
-		count++;
 		getList(count);
-	});
-	
-	
-	$("#btn").on("click", function() {
-		var writer = $("#writer").val();
-		var contents = $("#contents").val();
 		
-		$("#writer").val("");
-		$("#contents").val("");
-		//$.get("url?name=value")
-		//$.post()
-		$.post("./memoInsert", {writer:writer, contents:contents}, function(result) {
-			result = result.trim();
-			if(result>0){
-				location.reload();
-			}else{
-				alert("Fail");
-			}
+		
+		$("#more").click(function() {
+			count++;
+			getList(count);
 		});
-	})
+		
+	
+	
+		$("#btn").click(function() {
+			var writer = $("#writer").val();
+			var contents = $("#contents").val();
+			
+			$("#writer").val('');
+			$("#contents").val('');
+			//$.get("url?name=value")
+			//$.post()
+			$.post("./memoInsert", {writer:writer, contents:contents}, function(result) {
+					result = result.trim();
+					if(result>0){
+						location.reload();
+					}else {
+						alert("Write Fail");
+					}
+			});
+			
+		});
 	
 	</script>
+	
 </body>
 </html>

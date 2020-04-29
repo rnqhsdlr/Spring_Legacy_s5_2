@@ -70,7 +70,7 @@
 				var s = $(this);
 				
 				$.post("../boardFile/fileDelete", {fileNum:$(this).attr("id"), board:$(this).attr("title")}, function(data) {
-					if(data.trim()>0){
+					if(data>0){
 						s.parent().remove();
 						count--;
 					}else {
